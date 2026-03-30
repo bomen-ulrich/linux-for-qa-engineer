@@ -1,0 +1,27 @@
+To check where (in which directory) you are currently working:
+>>$pwd
+pwd == stand for present working directory
+
+Once you know what is the active directory at this moment, you want to work in an organize way.
+First check what are all the availables directories: use the command:
+>>$ls -al
+
+To stay organize, we want to move to the "Documents" directory to start working:
+>>$cd Documents
+And we verify that we have successfully move
+>>$pwd
+
+From there, we create a new directory for our project or work (to stay clean):
+>>$mkdir qa-engineer-linx
+Then we move into that directory:
+>>$cd qa-engineer-linux
+
+Now we create the first file name "basic-commands.txt" about basic linux commands a QA Engineer must know:
+>>$touch basic-commands.txt
+Now we open that file:
+>>nano basic-commands.txt
+
+Since we are following the exact intructions on this file, let's exit and start practising!!
+Using the content of this file, here is what to practice on your terminal:
+
+1-NAVIGATION:
