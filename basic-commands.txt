@@ -24,4 +24,51 @@ Now we open that file:
 Since we are following the exact intructions on this file, let's exit and start practising!!
 Using the content of this file, here is what to practice on your terminal:
 
-1-NAVIGATION:
+Phase 1: Let's get familiar with the Shell
+- As a QA,  the shell is where we trigger tests, we read and see the results
+- first to check which user owns a runing process,
+    >>$whoami
+    It give us back the current active user
+    It means that all the currently running process run with that user level of permission
+    This is crucial for solving permission bugs == change the user or grant more permission to the user
+
+- Next, to check the environment variables
+	>>$printenv
+	It show us all the system variable with their current values
+	We can use those variable in our script, bash script
+	The command to check one of those variable value, we can type the command: echo $USER - echo $PATH
+
+- Next, to verify the shell type we are working on:
+	>>echo $SHELL
+	This is also another use of environment variable, since (SHELL) is an env. variable
+	Remark to respect the cast, if not, it won't work since SHELL is not shell
+
+- Next, to check the command history:
+	>>history
+	It will show you the list of all the commands that were type using this current USER session
+	It also help us to see and  reuse complex test commands without retyping them
+
+Phase 1 task: Create a simple alias
+	>>alias checklogs='tail -f /var/log/syslog'
+	This command create a shortcut or a short form command name "checklogs" for the long command "tail -f /var/log/syslog
+	Now instead of typing that long command, we can just type "checklogs"
+	Whenever we are typing "checklogs" we are basically typing "tail -f /var/log/syslog
+	We are now seeing a real-time monitoring of the system
+	We can open an application and come back to the terminal and see how we are directly been informed
+	the "tail" command allow us to see the log files stored inside the "syslog" directory
+	To remove or cancel that alias: >>unalias checklogs
+
+Phase 2:The filesystem hierachy or the data map
+- First thing first. Everything in linux is a file. if a bug occurs, it is usually because a file is in the wrong place or has the wrong "rules"
+- The "/bin" directory:
+	>>ls /bin
+	It show us a bunch of program or commands to execute
+	bin == binary and binary == executable, program
+	Here we can find program like, ls - rm - ping - mkdir - grep - cp ...
+
+- The "/etc" directory
+	>>ls /etc
+	It is where all the app/programs configurations files live
+	If an app won't start, check here
+	If we want to change the configuration of a programm, come here
+
