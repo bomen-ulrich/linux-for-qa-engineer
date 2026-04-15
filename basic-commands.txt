@@ -71,4 +71,71 @@ Phase 2:The filesystem hierachy or the data map
 	It is where all the app/programs configurations files live
 	If an app won't start, check here
 	If we want to change the configuration of a programm, come here
+	It is also very important for QA Engineer: for setting up, modifiying and validating environments
+	QA Engineer use it to configure services, manage database connections and control test application behavior
+	>>/etc/default == contains default settings for daemons and services ==useful for validating default configuration
+	>>/etc/hosts ==used to map IP addresses to hostnames for testing microservices 
+	>>/etc/apt/sources.list.d ==use to configure software repositories for automated installation of test dependencies
+	>>/etc/network ==essential for testing network configurations and interface changes
+	Some common QA Automation tasks with /etc:
+		>>For env setup:Use Ansible to automate changes within /etc files for consistent test environments
+		>>For validation : by running sripts to verify that specific security or configuration is ok or correctly applied
+		>>For Dependency Management: by ensuring the correct versions of testing tools are installed
+	
 
+- The "/var/log" directory
+	>>ls /var/log
+	It is a very important directory for QA Engineer
+	It helps us understand what happened on the server,or on the CI environment when a test fails
+	It helps us confirm the origin of the problem/fail: whether it is due to the App, the API, the permissions, the network, the Os, the deployment setup.
+	A QA checks /var/log for system messages, authentication events, database log, pakages/install issues, web server logs
+	If you test backend systems, APIs, microservices,or deployment pipeline
+	QA engineer should know how to use the below commands to inspect logs quickly
+		>>tail -f
+		>>grep
+		>>less
+	For example: if a test say "login failed", checking the logs can tell us whether the issue is a bad password, an expired token, a database error, or an SSH authentication problem
+
+
+- The "/tmp" directory
+	The running apps store their temporary data here
+	It acts as a sandbox for temporary storage preventing clutter in productive directories 
+	If this directory fill up due to space issue, apps will crash
+
+
+
+Phase 3: The Kernel & Processes 
+- The " ps aux" : list process
+	It is a snapshot of evry living program
+	It helps us to find the PID = Process ID to locate it log in /var/log or just to terminate/kill that process
+	It helps us find if a backend(webserver, database) process is actually running
+	It helps us to pinpoint ressources that are using too much %CPU or $MEM
+		>>ps aux | grep "my-app-name"		>>to find if my-app-name is runing
+		>>ps aux --sort=-%mem | head 11		>>to find the top 10 memomy consuming processes
+		>>ps aux | awk '$8=="z" {print}		>>to identifie zombies process = there are processes that have finished but are still taking up space in the process table
+
+
+
+- The "top or htop" : Live monitor
+	It give us realtime hearbeat of the system
+	It show us which test is eating all your RAM
+	htop is the coloured version of top, more visual
+	It is a real time monitor to bridge the gar between what is happening on the screen and what is hapeniing inside the server
+
+
+- The "dmes" : the kernel logs
+	It shows kernel-level event (hardware, drive, memory, USB, Iot devices)
+		>>sodu dmesg -l err,warn  ===filter the output to only show the errors and warnings
+
+
+- The "kill" : kill signal
+	It force-close a "zombie process that refuses to stop after a failed test
+		>>kill <PID>  : the polite request to ask the app to shut down giving it time to save it works, to cloase it database connections, to delete temporary files in /tmp
+		>>kill -9 <PID> :the immediate action, the kernel kills the process instantly
+	Checklist process termination:
+		>>kill <PID>
+		>>ps aux | grep <PID>  check the process is gone
+		>>kill -9 <PID>  if the process still exist
+		>>dmesg verify the logs 
+
+	
